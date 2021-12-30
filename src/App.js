@@ -33,6 +33,7 @@ function App() {
       while (movieInfoArray.length > 9) {
         movieInfoArray.pop()
       }
+      //fffff
 
       setMovies(dataArray)
       setMovieInfo(movieInfoArray)
