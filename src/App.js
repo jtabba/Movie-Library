@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import banner from './banner.png'
 
+const key = process.env.REACT_APP_OMDB_API_KEY
+
 function App() {
   const [movieTitle, setMovieTitle] = useState('')
   const [currentTitle, setcurrentTitle] = useState('')
@@ -17,11 +19,11 @@ function App() {
     setcurrentTitle(movieTitle)
     setSearchExecuted(1)
     
-    axios.get(`https://www.omdbapi.com/?s=${movieTitle}&apikey=15dfe4ee`).then(res => {
+    axios.get(`https://www.omdbapi.com/?s=${movieTitle}&apikey=${key}`).then(res => {
       res.data.Search.forEach(data => data.Poster !== "N/A" ? dataArray.push([data.Title, data.Year, data.Poster]) : null)
 
       dataArray.forEach(title => {
-        axios.get(`https://www.omdbapi.com/?t=${title[0]}&apikey=15dfe4ee`).then(res => {
+        axios.get(`https://www.omdbapi.com/?t=${title[0]}&apikey=${key}`).then(res => {
           movieInfoArray.push([res.data.Actors, res.data.Type, res.data.Plot, res.data.Rated, res.data.Genre, res.data.Director, res.data.Runtime, res.data.Metascore, res.data.imdbRating])
         })
       })
@@ -33,7 +35,6 @@ function App() {
       while (movieInfoArray.length > 9) {
         movieInfoArray.pop()
       }
-      //fffff
 
       setMovies(dataArray)
       setMovieInfo(movieInfoArray)
